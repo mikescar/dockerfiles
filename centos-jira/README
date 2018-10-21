@@ -1,0 +1,44 @@
+Some commands and why.
+
+`docker build --run -it centos-jira:installer-only -f Dockerfile.installer-only`
+
+
+# TODO parse the rest into files / instructions
+
+yum install epel-release
+yum install httpd mod_ssl python-certbot-apache
+
+mkdir /etc/ssl/private
+chmod 700 /etc/ssl/private
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+
+openssl req -x509 -nodes -days 90 -newkey rsa:4096 -keyout /etc/ssl/private/jira-selfsigned.key -out /etc/ssl/certs/jira-selfsigned.crt
+
+ll /etc/ssl/certs/
+ls -alh /etc/ssl
+
+yum install java-1.8.0-openjdk
+keytool -genkey -alias jira -keyalg RSA -keystore /opt/atlassian/jira/jira.jks
+keytool -importkeystore -srckeystore /opt/atlassian/jira/jira.jks -destkeystore /opt/atlassian/jira/jira.jks -deststoretype pkcs12
+
+keytool -import -alias rootCA -keystore /opt/atlassian/jira/jira.jks -trustcacerts -file root.crt
+keytool -import -alias rootCA -keystore /opt/atlassian/jira/jira.jks -trustcacerts -file /etc/ssl/certs/jira-selfsigned.crt
+echo $JIRA_HOME
+export JIRA_HOME=/opt/atlassian/jira
+keytool -list -alias jira -keystore $JIRA_HOME/jira.jks
+cd /opt/atlassian/jira/conf/
+cp server.xml server.xml.bak
+vi server.xml
+vi server.xml
+vi server.xml
+
+ps aux
+
+
+kill 47659
+ps aux
+/opt/atlassian/jira/bin/stop-jira.sh
+ps aux
+/opt/atlassian/jira/bin/start-jira.sh
+ps aux

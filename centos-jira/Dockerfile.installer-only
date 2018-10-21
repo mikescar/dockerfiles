@@ -1,0 +1,17 @@
+FROM centos:7
+
+# Get the installer, and you do the rest:
+#   `docker run -it <tag_name> /bin/bash /tmp/jira-install-7.12.3.bin`
+
+# This is good for creating an container that serves as the base for both the throwaway test
+#   install for your organization, and the production install.
+# The EZPZ test install just uses a local JVM database (H2), and a self-signed cert.
+# Production setup is more involved and shouldn't include that stuff. Prod should include a real CA-issued cert,
+#   and use a production-grade database.
+
+# Before building from this Dockerfile, update the version here to the latest stable
+ENV JIRA_VERSION 7.12.3-x64
+RUN echo Downloading jira installer v${JIRA_VERSION} && \
+    curl -o jira-install.bin \
+      https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-${JIRA_VERSION}.bin && \
+    chmod +x jira-install.bin
