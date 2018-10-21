@@ -1,6 +1,6 @@
 Some commands and why.
 
-`docker build --run -it centos-jira:installer-only -f Dockerfile.installer-only`
+`docker build --run -it whatever-you-want:but-dont-use-latest-tag -f Dockerfile.installer-only .`
 
 
 # TODO parse the rest into files / instructions

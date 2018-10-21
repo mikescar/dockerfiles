@@ -1,7 +1,6 @@
 FROM centos:7
 
-# Get the installer, and you do the rest:
-#   `docker run -it <tag_name> /bin/bash /tmp/jira-install-7.12.3.bin`
+# Add the jira installer to a clean CentOS install.
 
 # This is good for creating an container that serves as the base for both the throwaway test
 #   install for your organization, and the production install.
@@ -14,4 +13,7 @@ ENV JIRA_VERSION 7.12.3-x64
 RUN echo Downloading jira installer v${JIRA_VERSION} && \
     curl -o jira-install.bin \
       https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-${JIRA_VERSION}.bin && \
-    chmod +x jira-install.bin
+    chmod +x jira-install.bin && \
+    echo "..." && \
+    echo "Now, run the installer: \`docker run -it <tag_name> /bin/bash /tmp/jira-install-${JIRA_VERSION}.bin\`" && \
+    echo "..."
