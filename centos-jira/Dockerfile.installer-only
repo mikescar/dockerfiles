@@ -2,11 +2,10 @@ FROM centos:7
 
 # Add the jira installer to a clean CentOS install.
 
-# This is good for creating an container that serves as the base for both the throwaway test
-#   install for your organization, and the production install.
-# The EZPZ test install just uses a local JVM database (H2), and a self-signed cert.
-# Production setup is more involved and shouldn't include that stuff. Prod should include a real CA-issued cert,
-#   and use a production-grade database.
+# This is the base image for both the throwaway eval install for your organization, and the production install.
+# The EZPZ eval install just uses a local JVM database (H2), and a self-signed cert.
+# Production setup is more involved and shouldn't include that stuff.
+#   Prod should include a real CA-issued cert, and use a production-grade database.
 
 # Before building from this Dockerfile, update the version here to the latest stable
 ENV JIRA_VERSION 7.12.3-x64
