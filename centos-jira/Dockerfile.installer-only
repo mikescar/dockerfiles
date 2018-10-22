@@ -1,5 +1,7 @@
 FROM centos:7
 
+RUN yum update -y && rm -rf /var/cache
+
 # Add the jira installer to a clean CentOS install.
 
 # This is the base image for both the throwaway eval install for your organization, and the production install.
@@ -9,10 +11,10 @@ FROM centos:7
 
 # Before building from this Dockerfile, update the version here to the latest stable
 ENV JIRA_VERSION 7.12.3-x64
+ENV TEMP_DIR /tmp
+
 RUN echo Downloading jira installer v${JIRA_VERSION} && \
-    curl -o jira-install.bin \
+    curl -o ${TEMP_DIR}/jira-install.bin \
       https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-${JIRA_VERSION}.bin && \
-    chmod +x jira-install.bin && \
-    echo "..." && \
-    echo "Now, run the installer: \`docker run -it <tag_name> /bin/bash /tmp/jira-install-${JIRA_VERSION}.bin\`" && \
-    echo "..."
+    chmod +x ${TEMP_DIR}/jira-install.bin && \
+    echo "Now, run the installer: \`docker run -it <tag_name> /bin/bash ${TEMP_DIR}/jira-install.bin\`, `docker commit` when you're ready"
